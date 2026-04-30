@@ -1,21 +1,47 @@
 import renderMathInElement from "katex/contrib/auto-render";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import { Routes, Route, useNavigate, useParams } from "react-router";
 
 import { Header } from "../components/Header";
 import { QuestionContent } from "../components/QuestionContent";
 import { QuestionDetail } from "../components/QuestionDetail";
 import { useQuestionExplorer } from "../hooks/useQuestionExplorer";
 import { useQuestionFilters } from "../hooks/useQuestionFilters";
-import type { Question } from "../data/questions";
+import Q from "../data/questions";
 
-export function App() {
+function QuestionDetailRoute() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  // Decode the URL param as it may contain spaces (e.g. "2082 Shrawan")
+  const decodedId = id ? decodeURIComponent(id) : "";
+  const question = Q.find((q) => `${q.year}-${q.qno}-${q.t}` === decodedId);
+
+  if (!question) {
+    return (
+      <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center flex-col gap-4">
+        <div className="text-xl text-[var(--text)]">Question not found</div>
+        <button onClick={() => navigate("/")} className="text-blue-500 hover:underline">
+          Go back home
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[var(--bg)]">
+      <QuestionDetail question={question} onBack={() => navigate("/")} />
+    </div>
+  );
+}
+
+function Home() {
   const contentRef = useRef<HTMLDivElement>(null);
   const filters = useQuestionFilters();
   const { filteredQuestions, topicCounts, viewTitle, years } = useQuestionExplorer(filters);
-  const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!contentRef.current || selectedQuestion) return;
+    if (!contentRef.current) return;
 
     renderMathInElement(contentRef.current, {
       delimiters: [
@@ -24,18 +50,7 @@ export function App() {
       ],
       throwOnError: false,
     });
-  }, [filteredQuestions, filters.viewMode, selectedQuestion]);
-
-  if (selectedQuestion) {
-    return (
-      <div className="min-h-screen bg-[var(--bg)]">
-        <QuestionDetail 
-          question={selectedQuestion} 
-          onBack={() => setSelectedQuestion(null)} 
-        />
-      </div>
-    );
-  }
+  }, [filteredQuestions, filters.viewMode]);
 
   return (
     <div className="min-h-screen bg-[var(--bg)]">
@@ -68,10 +83,19 @@ export function App() {
             questions={filteredQuestions}
             search={filters.search}
             viewMode="list"
-            onQuestionSelect={setSelectedQuestion}
+            onQuestionSelect={(q) => navigate(`/question/${encodeURIComponent(`${q.year}-${q.qno}-${q.t}`)}`)}
           />
         </div>
       </main>
     </div>
+  );
+}
+
+export function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/question/:id" element={<QuestionDetailRoute />} />
+    </Routes>
   );
 }
