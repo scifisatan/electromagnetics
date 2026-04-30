@@ -66,6 +66,7 @@ function Home() {
         onYearChange={filters.setActiveYear}
         topicCounts={topicCounts}
         years={years}
+        onResetFilters={filters.resetFilters}
       />
 
       <main className="mx-auto max-w-4xl px-4 py-8 min-[901px]:px-8 min-[901px]:py-12">

@@ -13,6 +13,7 @@ interface HeaderProps {
   onYearChange: (year: ActiveYear) => void;
   topicCounts: Map<TopicId, number>;
   years: string[];
+  onResetFilters?: () => void;
 }
 
 export function Header({
@@ -27,7 +28,10 @@ export function Header({
   onYearChange,
   topicCounts,
   years,
+  onResetFilters,
 }: HeaderProps) {
+  const hasActiveFilters = activeTopic !== 0 || activeYear !== "all" || activeType !== "all" || search !== "";
+
   return (
     <header className="sticky top-0 z-10 border-b border-[var(--border)] bg-[var(--bg2)]/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-4xl flex-col gap-4 px-4 pt-4 pb-3 min-[901px]:px-8">
@@ -127,20 +131,36 @@ export function Header({
                 ))}
              </div>
              
-             <div className="flex items-center bg-[var(--bg)] rounded-full p-0.5 border border-[var(--border)] shrink-0 self-start md:self-auto">
-                {(["all", "Regular", "Back"] as const).map(type => (
-                  <button
-                    key={type}
-                    onClick={() => onTypeChange(type)}
-                    className={`rounded-full px-4 py-1 text-[12px] font-medium transition-all ${
-                      activeType === type
-                        ? "bg-[var(--bg2)] text-[var(--text)] shadow-sm border border-[var(--border2)]"
-                        : "text-[var(--text3)] hover:text-[var(--text2)] border border-transparent"
-                    }`}
-                  >
-                    {type === "all" ? "All Types" : type}
-                  </button>
-                ))}
+             <div className="flex items-center gap-2 shrink-0 self-start md:self-auto">
+               <div className="flex items-center bg-[var(--bg)] rounded-full p-0.5 border border-[var(--border)]">
+                  {(["all", "Regular", "Back"] as const).map(type => (
+                    <button
+                      key={type}
+                      onClick={() => onTypeChange(type)}
+                      className={`rounded-full px-4 py-1 text-[12px] font-medium transition-all ${
+                        activeType === type
+                          ? "bg-[var(--bg2)] text-[var(--text)] shadow-sm border border-[var(--border2)]"
+                          : "text-[var(--text3)] hover:text-[var(--text2)] border border-transparent"
+                      }`}
+                    >
+                      {type === "all" ? "All Types" : type}
+                    </button>
+                  ))}
+               </div>
+               
+               {hasActiveFilters && onResetFilters && (
+                 <button
+                   onClick={onResetFilters}
+                   className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-medium text-[var(--text3)] hover:text-[var(--text)] hover:bg-[var(--bg3)] transition-colors"
+                   title="Reset all filters"
+                 >
+                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                     <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                     <path d="M3 3v5h5" />
+                   </svg>
+                   Reset
+                 </button>
+               )}
              </div>
           </div>
           
