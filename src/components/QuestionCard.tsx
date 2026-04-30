@@ -4,44 +4,39 @@ interface QuestionCardProps {
   question: Question;
 }
 
-const typeClass = {
-  Back: "border-[rgba(255,107,107,0.2)] bg-[rgba(255,107,107,0.12)] text-[#ff8585]",
-  Regular: "border-[rgba(56,201,160,0.2)] bg-[rgba(56,201,160,0.12)] text-[var(--t4)]",
-} as const;
-
 export function QuestionCard({ question }: QuestionCardProps) {
   return (
-    <div
-      className="relative rounded-[10px] border border-l-3 border-[var(--border)] bg-[var(--bg2)] px-[18px] py-4 transition-[border-color,transform,box-shadow] duration-200 hover:-translate-y-px hover:border-[var(--border2)] hover:shadow-[var(--shadow)] data-[t='1']:border-l-[var(--t1)] data-[t='2']:border-l-[var(--t2)] data-[t='3']:border-l-[var(--t3)] data-[t='4']:border-l-[var(--t4)] data-[t='5']:border-l-[var(--t5)] data-[t='6']:border-l-[var(--t6)] data-[t='7']:border-l-[var(--t7)] data-[t='8']:border-l-[var(--t8)] data-[t='9']:border-l-[var(--t9)] data-[t='10']:border-l-[var(--t10)] data-[t='11']:border-l-[var(--t11)] data-[t='12']:border-l-[var(--t12)]"
-      data-t={question.t}
-    >
-      <div className="mb-2.5 flex items-start gap-2.5">
-        <span className="mt-0.5 shrink-0 whitespace-nowrap rounded-[5px] border border-[var(--border2)] bg-[var(--bg3)] px-2 py-[3px] font-['JetBrains_Mono',monospace] text-[11px] font-medium text-[var(--text3)]">
-          {question.qno}
-        </span>
-        <span className="mt-0.5 shrink-0 whitespace-nowrap rounded-[5px] border border-[var(--border)] bg-[var(--tag-bg)] px-2 py-[3px] text-[11.5px] text-[var(--text3)]">
-          {question.year}
-        </span>
-        <span
-          className={`mt-[3px] shrink-0 rounded border px-[7px] py-[3px] text-[10px] font-semibold tracking-[0.05em] uppercase ${typeClass[question.type]}`}
-        >
-          {question.type}
-        </span>
+    <div className="mb-8 flex gap-4 text-[var(--text)] transition-colors hover:bg-[var(--bg2)] rounded-lg p-2 -ml-2">
+      <div className="font-[family:var(--serif)] text-base font-semibold min-w-[2rem] pt-0.5 text-[var(--text2)]">
+        {question.qno}.
       </div>
-      <div className="q-text flex-1 text-sm leading-[1.7] text-[var(--text)]">
-        {question.text}
-        {question.sub ? (
-          <div className="mt-1.5 ml-3.5 border-l-2 border-[var(--border2)] pl-3">
-            {question.sub.map((subQuestion) => (
-              <div
-                className="mt-[5px] text-[13.5px] text-[var(--text2)] first:mt-[3px]"
-                key={subQuestion}
-              >
-                {subQuestion}
-              </div>
-            ))}
-          </div>
-        ) : null}
+      <div className="flex-1">
+        <div className="q-text font-[family:var(--serif)] text-[1.1rem] leading-[1.8]">
+          {question.text}
+          {question.sub ? (
+            <div className="mt-4 flex flex-col gap-3 ml-2">
+              {question.sub.map((subQuestion, index) => (
+                <div className="flex gap-3 text-[1.05rem]" key={subQuestion}>
+                  <span className="text-[var(--text3)] font-medium">
+                    ({String.fromCharCode(97 + index)})
+                  </span>
+                  <div>{subQuestion}</div>
+                </div>
+              ))}
+            </div>
+          ) : null}
+        </div>
+        
+        <div className="mt-4 flex items-center gap-3 font-[family:var(--sans)] text-[0.75rem] uppercase tracking-wider font-semibold">
+          <span className="rounded bg-[var(--bg3)] border border-[var(--border)] px-2 py-1 text-[var(--text2)]">
+            {question.year}
+          </span>
+          <span className={`rounded px-2 py-1 border ${
+            question.type === 'Back' ? 'border-red-200 bg-red-50 text-red-600' : 'border-emerald-200 bg-emerald-50 text-emerald-600'
+          }`}>
+            {question.type}
+          </span>
+        </div>
       </div>
     </div>
   );

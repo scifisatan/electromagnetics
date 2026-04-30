@@ -1,78 +1,54 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #0d0f14;
-  --bg2: #141720;
-  --bg3: #1c2030;
-  --border: #252a3a;
-  --border2: #2e3450;
-  --accent: #4f7cff;
-  --accent2: #7b5ea7;
-  --accent3: #38c9a0;
-  --text: #e2e6f0;
-  --text2: #8e96b0;
-  --text3: #5a6180;
-  --tag-bg: #1a2040;
-  --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+  --bg: #f5f4ed; /* parchment */
+  --bg2: #faf9f5; /* ivory */
+  --bg3: #e8e6dc; /* warm-sand */
+  --border: #e8e6dc;
+  --border2: #e5e3d8; /* border-soft */
+  
+  --accent: #1B365D; /* brand */
+  --text: #141413; /* near-black */
+  --text2: #3d3d3a; /* dark-warm */
+  --text3: #6b6a64; /* stone */
+  
+  --tag-bg: #e8e6dc;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
 
-  --t1: #4f7cff;
-  --t1bg: rgba(79, 124, 255, 0.12);
-  --t2: #ff6b6b;
-  --t2bg: rgba(255, 107, 107, 0.12);
-  --t3: #ffd166;
-  --t3bg: rgba(255, 209, 102, 0.12);
-  --t4: #38c9a0;
-  --t4bg: rgba(56, 201, 160, 0.12);
-  --t5: #ff9f43;
-  --t5bg: rgba(255, 159, 67, 0.12);
-  --t6: #a29bfe;
-  --t6bg: rgba(162, 155, 254, 0.12);
-  --t7: #fd79a8;
-  --t7bg: rgba(253, 121, 168, 0.12);
-  --t8: #00b894;
-  --t8bg: rgba(0, 184, 148, 0.12);
-  --t9: #74b9ff;
-  --t9bg: rgba(116, 185, 255, 0.12);
-  --t10: #e17055;
-  --t10bg: rgba(225, 112, 85, 0.12);
-  --t11: #6c5ce7;
-  --t11bg: rgba(108, 92, 231, 0.12);
-  --t12: #fdcb6e;
-  --t12bg: rgba(253, 203, 110, 0.12);
+  --serif: Charter, Georgia, "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", Palatino, serif;
+  --sans: var(--serif);
+  --mono: "JetBrains Mono", "Fira Code", "SF Mono", Consolas, Monaco, monospace;
 }
 
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: "Outfit", sans-serif;
-  font-size: 15px;
+  font-family: var(--serif);
+  font-size: 14.5px;
   line-height: 1.6;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
   min-height: 100vh;
 }
 
-aside::-webkit-scrollbar {
-  width: 4px;
-}
-aside::-webkit-scrollbar-thumb {
-  background: var(--border2);
-  border-radius: 4px;
-}
-
-.q-text .katex {
-  font-size: 1em;
-}
-
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg2);
+  background: var(--bg);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--border2);
-  border-radius: 6px;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text3);
+}
+
+.q-text .katex {
+  font-size: 1.05em;
 }

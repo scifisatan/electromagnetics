@@ -21,13 +21,9 @@ export function QuestionContent({
 }: QuestionContentProps) {
   if (questions.length === 0) {
     return (
-      <div className="px-5 py-20 text-center text-[var(--text3)]">
-        <div className="mb-3 text-5xl opacity-30">Search</div>
-        <div>
-          No questions found.
-          <br />
-          Try adjusting your filters.
-        </div>
+      <div className="px-5 py-24 text-center font-[family:var(--serif)] text-[var(--text3)]">
+        <div className="text-xl">No questions found.</div>
+        <div className="mt-2 text-[var(--text2)]">Try adjusting your filters.</div>
       </div>
     );
   }
@@ -40,21 +36,11 @@ export function QuestionContent({
           if (topicQuestions.length === 0) return null;
 
           return (
-            <div className="mb-9" key={topic.id}>
-              <div className="mb-3.5 flex items-center gap-2.5 border-b border-[var(--border)] pb-2.5">
-                <div
-                  className="flex items-center gap-[7px] rounded-[20px] px-3 py-[5px] text-[13px] font-semibold tracking-[0.01em]"
-                  style={{ background: topic.bg, color: topic.color }}
-                >
-                  <span
-                    className="inline-block h-2 w-2 rounded-full"
-                    style={{ background: topic.color }}
-                  />
+            <div className="mb-14" key={topic.id}>
+              <div className="mb-8 border-b border-[var(--border2)] pb-3">
+                <h2 className="font-[family:var(--serif)] text-2xl font-bold text-[var(--text)] tracking-tight">
                   {topic.name}
-                </div>
-                <span className="rounded-xl border border-[var(--border)] bg-[var(--bg3)] px-[9px] py-[3px] text-xs text-[var(--text3)]">
-                  {topicQuestions.length} questions
-                </span>
+                </h2>
               </div>
               <QuestionGrid questions={topicQuestions} viewMode={viewMode} />
             </div>

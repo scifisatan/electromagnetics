@@ -9,13 +9,7 @@ interface QuestionGridProps {
 
 export function QuestionGrid({ questions, viewMode }: QuestionGridProps) {
   return (
-    <div
-      className={`grid gap-3.5 ${
-        viewMode === "list"
-          ? "grid-cols-1"
-          : "grid-cols-1 min-[901px]:grid-cols-[repeat(auto-fill,minmax(520px,1fr))]"
-      }`}
-    >
+    <div className="flex flex-col gap-2">
       {questions.map((question) => (
         <QuestionCard key={`${question.year}-${question.qno}-${question.t}`} question={question} />
       ))}
