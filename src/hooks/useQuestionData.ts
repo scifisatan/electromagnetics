@@ -11,8 +11,16 @@ export function useQuestionData(questionId: string) {
     isDone: false,
   });
 
-  const setNotes = (notes: string) => setData((prev) => ({ ...prev, notes }));
-  const setIsDone = (isDone: boolean) => setData((prev) => ({ ...prev, isDone }));
+  const setNotes = (notes: string | ((prev: string) => string)) =>
+    setData((prev) => ({
+      ...prev,
+      notes: typeof notes === "function" ? notes(prev.notes) : notes,
+    }));
+  const setIsDone = (isDone: boolean | ((prev: boolean) => boolean)) =>
+    setData((prev) => ({
+      ...prev,
+      isDone: typeof isDone === "function" ? isDone(prev.isDone) : isDone,
+    }));
 
   return {
     notes: data.notes,

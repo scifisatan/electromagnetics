@@ -4,7 +4,7 @@ import "./styles.css";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
-import { NuqsAdapter } from 'nuqs/adapters/react-router/v7'
+import { NuqsAdapter } from "nuqs/adapters/react-router/v7";
 import { App } from "./app/App";
 
 const root = document.getElementById("root");

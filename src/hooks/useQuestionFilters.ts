@@ -4,31 +4,19 @@ import type { TopicId } from "../data/topics";
 import type { ActiveType, ActiveYear } from "../types/filters";
 
 export function useQuestionFilters() {
-  const [activeTopic, setActiveTopic] = useQueryState(
-    "topic",
-    parseAsInteger.withDefault(0)
-  );
-  
-  const [activeYear, setActiveYear] = useQueryState(
-    "year",
-    parseAsString.withDefault("all")
-  );
+  const [activeTopic, setActiveTopic] = useQueryState("topic", parseAsInteger.withDefault(0));
 
-  const [activeType, setActiveType] = useQueryState(
-    "type",
-    parseAsString.withDefault("all")
-  );
+  const [activeYear, setActiveYear] = useQueryState("year", parseAsString.withDefault("all"));
 
-  const [search, setSearch] = useQueryState(
-    "q",
-    parseAsString.withDefault("")
-  );
+  const [activeType, setActiveType] = useQueryState("type", parseAsString.withDefault("all"));
+
+  const [search, setSearch] = useQueryState("q", parseAsString.withDefault(""));
 
   const resetFilters = () => {
-    setActiveTopic(null);
-    setActiveYear(null);
-    setActiveType(null);
-    setSearch(null);
+    void setActiveTopic(null);
+    void setActiveYear(null);
+    void setActiveType(null);
+    void setSearch(null);
   };
 
   return {

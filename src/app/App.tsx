@@ -37,7 +37,7 @@ function QuestionDetailRoute() {
 function Home() {
   const contentRef = useRef<HTMLDivElement>(null);
   const filters = useQuestionFilters();
-  const { filteredQuestions, topicCounts, viewTitle, years } = useQuestionExplorer(filters);
+  const { filteredQuestions, viewTitle, years } = useQuestionExplorer(filters);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,7 +55,6 @@ function Home() {
   return (
     <div className="min-h-screen bg-[var(--bg)]">
       <Header
-        questionCount={filteredQuestions.length}
         search={filters.search}
         onSearchChange={filters.setSearch}
         activeTopic={filters.activeTopic}
@@ -64,7 +63,6 @@ function Home() {
         onTopicChange={filters.setActiveTopic}
         onTypeChange={filters.setActiveType}
         onYearChange={filters.setActiveYear}
-        topicCounts={topicCounts}
         years={years}
         onResetFilters={filters.resetFilters}
       />
@@ -83,7 +81,9 @@ function Home() {
             activeTopic={filters.activeTopic}
             questions={filteredQuestions}
             search={filters.search}
-            onQuestionSelect={(q) => navigate(`/question/${encodeURIComponent(`${q.year}-${q.qno}-${q.t}`)}`)}
+            onQuestionSelect={(q) =>
+              navigate(`/question/${encodeURIComponent(`${q.year}-${q.qno}-${q.t}`)}`)
+            }
           />
         </div>
       </main>

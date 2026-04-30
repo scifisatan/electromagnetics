@@ -50,5 +50,7 @@ export function QuestionContent({
     );
   }
 
-  return <QuestionGrid questions={sortQuestionsByYear(questions)} onQuestionSelect={onQuestionSelect} />;
+  return (
+    <QuestionGrid questions={sortQuestionsByYear(questions)} onQuestionSelect={onQuestionSelect} />
+  );
 }

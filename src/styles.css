@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 :root {
   --bg: #f5f4ed; /* parchment */
@@ -6,16 +7,18 @@
   --bg3: #e8e6dc; /* warm-sand */
   --border: #e8e6dc;
   --border2: #e5e3d8; /* border-soft */
-  
-  --accent: #1B365D; /* brand */
+
+  --accent: #1b365d; /* brand */
   --text: #141413; /* near-black */
   --text2: #3d3d3a; /* dark-warm */
   --text3: #6b6a64; /* stone */
-  
+
   --tag-bg: #e8e6dc;
   --shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
 
-  --serif: Charter, Georgia, "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", Palatino, serif;
+  --serif:
+    Charter, Georgia, "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC",
+    Palatino, serif;
   --sans: var(--serif);
   --mono: "JetBrains Mono", "Fira Code", "SF Mono", Consolas, Monaco, monospace;
 }
