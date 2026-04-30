@@ -50,7 +50,7 @@ function Home() {
       ],
       throwOnError: false,
     });
-  }, [filteredQuestions, filters.viewMode]);
+  }, [filteredQuestions]);
 
   return (
     <div className="min-h-screen bg-[var(--bg)]">
@@ -82,7 +82,6 @@ function Home() {
             activeTopic={filters.activeTopic}
             questions={filteredQuestions}
             search={filters.search}
-            viewMode="list"
             onQuestionSelect={(q) => navigate(`/question/${encodeURIComponent(`${q.year}-${q.qno}-${q.t}`)}`)}
           />
         </div>

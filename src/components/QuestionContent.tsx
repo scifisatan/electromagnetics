@@ -1,7 +1,7 @@
 import type { Question } from "../data/questions";
 import TOPICS, { type TopicId } from "../data/topics";
 import { sortQuestionsByYear } from "../lib/questions";
-import type { ActiveYear, ViewMode } from "../types/filters";
+import type { ActiveYear } from "../types/filters";
 import { QuestionGrid } from "./QuestionGrid";
 
 interface QuestionContentProps {
@@ -9,7 +9,6 @@ interface QuestionContentProps {
   activeYear: ActiveYear;
   questions: Question[];
   search: string;
-  viewMode: ViewMode;
   onQuestionSelect?: (question: Question) => void;
 }
 
@@ -18,7 +17,6 @@ export function QuestionContent({
   activeYear,
   questions,
   search,
-  viewMode,
   onQuestionSelect,
 }: QuestionContentProps) {
   if (questions.length === 0) {
@@ -44,7 +42,7 @@ export function QuestionContent({
                   {topic.name}
                 </h2>
               </div>
-              <QuestionGrid questions={topicQuestions} viewMode={viewMode} onQuestionSelect={onQuestionSelect} />
+              <QuestionGrid questions={topicQuestions} onQuestionSelect={onQuestionSelect} />
             </div>
           );
         })}
@@ -52,5 +50,5 @@ export function QuestionContent({
     );
   }
 
-  return <QuestionGrid questions={sortQuestionsByYear(questions)} viewMode={viewMode} onQuestionSelect={onQuestionSelect} />;
+  return <QuestionGrid questions={sortQuestionsByYear(questions)} onQuestionSelect={onQuestionSelect} />;
 }

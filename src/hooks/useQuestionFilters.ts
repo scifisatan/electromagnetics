@@ -1,7 +1,7 @@
 import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 
 import type { TopicId } from "../data/topics";
-import type { ActiveType, ActiveYear, ViewMode } from "../types/filters";
+import type { ActiveType, ActiveYear } from "../types/filters";
 
 export function useQuestionFilters() {
   const [activeTopic, setActiveTopic] = useQueryState(
@@ -19,26 +19,27 @@ export function useQuestionFilters() {
     parseAsString.withDefault("all")
   );
 
-  const [viewMode, setViewMode] = useQueryState(
-    "view",
-    parseAsString.withDefault("grid")
-  );
-
   const [search, setSearch] = useQueryState(
     "q",
     parseAsString.withDefault("")
   );
 
+  const resetFilters = () => {
+    setActiveTopic(null);
+    setActiveYear(null);
+    setActiveType(null);
+    setSearch(null);
+  };
+
   return {
     activeTopic: activeTopic as TopicId | 0,
     activeYear: activeYear as ActiveYear,
     activeType: activeType as ActiveType,
-    viewMode: viewMode as ViewMode,
     search,
     setActiveTopic,
     setActiveYear,
     setActiveType,
-    setViewMode,
     setSearch,
+    resetFilters,
   };
 }
