@@ -30,15 +30,15 @@ export function Header({
 }: HeaderProps) {
   return (
     <header className="sticky top-0 z-10 border-b border-[var(--border)] bg-[var(--bg2)]/90 backdrop-blur-md">
-      <div className="mx-auto flex max-w-4xl flex-col gap-4 px-4 py-3 md:flex-row md:items-center min-[901px]:px-8">
-        <div className="flex-1">
+      <div className="mx-auto flex max-w-4xl flex-col gap-4 px-4 pt-4 pb-3 min-[901px]:px-8">
+        
+        {/* Top Row: Title & Search */}
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <h1 className="font-[family:var(--serif)] text-xl font-bold text-[var(--text)] whitespace-nowrap">
             Electromagnetics <span className="text-[var(--text3)] font-normal">EX 503</span>
           </h1>
-        </div>
-
-        <div className="flex flex-col gap-3 md:flex-row md:items-center">
-          <div className="relative w-full md:w-48 lg:w-64">
+          
+          <div className="relative w-full md:w-64">
             <svg
               aria-hidden="true"
               className="absolute top-1/2 left-2.5 -translate-y-1/2 text-[var(--text3)]"
@@ -60,45 +60,92 @@ export function Header({
               placeholder="Search..."
             />
           </div>
-
         </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <select
-              className="cursor-pointer rounded-md border border-[var(--border)] bg-[var(--bg)] py-1.5 pl-2 pr-6 text-[13.5px] font-medium text-[var(--text2)] outline-none focus:border-[var(--text3)] font-[family:var(--sans)]"
-              value={activeTopic}
-              onChange={(e) => onTopicChange(Number(e.target.value) as TopicId | 0)}
-            >
-              <option value={0}>All Topics</option>
-              {TOPICS.map((t) => (
-                <option key={t.id} value={t.id}>
-                  {t.name}
-                </option>
-              ))}
-            </select>
 
-            <select
-              className="cursor-pointer rounded-md border border-[var(--border)] bg-[var(--bg)] py-1.5 pl-2 pr-6 text-[13.5px] font-medium text-[var(--text2)] outline-none focus:border-[var(--text3)] font-[family:var(--sans)]"
-              value={activeYear}
-              onChange={(e) => onYearChange(e.target.value as ActiveYear)}
-            >
-              <option value="all">All Years</option>
-              {years.map((y) => (
-                <option key={y} value={y}>
-                  {y}
-                </option>
-              ))}
-            </select>
-
-            <select
-              className="cursor-pointer rounded-md border border-[var(--border)] bg-[var(--bg)] py-1.5 pl-2 pr-6 text-[13.5px] font-medium text-[var(--text2)] outline-none focus:border-[var(--text3)] font-[family:var(--sans)]"
-              value={activeType}
-              onChange={(e) => onTypeChange(e.target.value as ActiveType)}
-            >
-              <option value="all">All Types</option>
-              <option value="Regular">Regular</option>
-              <option value="Back">Back</option>
-            </select>
+        {/* Filters Row */}
+        <div className="flex flex-col gap-3 mt-1">
+          
+          {/* Topics */}
+          <div className="flex items-center">
+             <div className="flex overflow-x-auto hide-scrollbar items-center gap-2 pb-1 -mb-1 w-full">
+                <button
+                  onClick={() => onTopicChange(0)}
+                  className={`shrink-0 rounded-full border px-3 py-1 text-[13px] font-medium transition-colors ${
+                    activeTopic === 0 
+                      ? "border-[var(--text)] bg-[var(--text)] text-[var(--bg)]"
+                      : "border-[var(--border)] bg-[var(--bg)] text-[var(--text2)] hover:border-[var(--text3)]"
+                  }`}
+                >
+                  All Topics
+                </button>
+                {TOPICS.map((t) => (
+                  <button
+                    key={t.id}
+                    onClick={() => onTopicChange(t.id)}
+                    className={`shrink-0 rounded-full border px-3 py-1 text-[13px] font-medium transition-colors ${
+                      activeTopic === t.id
+                        ? "border-transparent"
+                        : "border-[var(--border)] bg-[var(--bg)] hover:border-[var(--text3)]"
+                    }`}
+                    style={
+                      activeTopic === t.id 
+                        ? { backgroundColor: t.bg, color: t.color, borderColor: t.color } 
+                        : { color: 'var(--text2)' }
+                    }
+                  >
+                    {t.name}
+                  </button>
+                ))}
+             </div>
           </div>
+
+          {/* Years & Types */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+             <div className="flex overflow-x-auto hide-scrollbar items-center gap-2 pb-1 -mb-1 flex-1">
+                <button
+                  onClick={() => onYearChange("all")}
+                  className={`shrink-0 rounded-full border px-3 py-1 text-[13px] font-medium transition-colors ${
+                    activeYear === "all" 
+                      ? "border-[var(--text)] bg-[var(--text)] text-[var(--bg)]"
+                      : "border-[var(--border)] bg-[var(--bg)] text-[var(--text2)] hover:border-[var(--text3)]"
+                  }`}
+                >
+                  All Years
+                </button>
+                {years.map((y) => (
+                  <button
+                    key={y}
+                    onClick={() => onYearChange(y as ActiveYear)}
+                    className={`shrink-0 rounded-full border px-3 py-1 text-[13px] font-medium transition-colors ${
+                      activeYear === y
+                        ? "border-[var(--text)] bg-[var(--text)] text-[var(--bg)]"
+                        : "border-[var(--border)] bg-[var(--bg)] text-[var(--text2)] hover:border-[var(--text3)]"
+                    }`}
+                  >
+                    {y}
+                  </button>
+                ))}
+             </div>
+             
+             <div className="flex items-center bg-[var(--bg)] rounded-full p-0.5 border border-[var(--border)] shrink-0 self-start md:self-auto">
+                {(["all", "Regular", "Back"] as const).map(type => (
+                  <button
+                    key={type}
+                    onClick={() => onTypeChange(type)}
+                    className={`rounded-full px-4 py-1 text-[12px] font-medium transition-all ${
+                      activeType === type
+                        ? "bg-[var(--bg2)] text-[var(--text)] shadow-sm border border-[var(--border2)]"
+                        : "text-[var(--text3)] hover:text-[var(--text2)] border border-transparent"
+                    }`}
+                  >
+                    {type === "all" ? "All Types" : type}
+                  </button>
+                ))}
+             </div>
+          </div>
+          
+        </div>
+
       </div>
     </header>
   );
