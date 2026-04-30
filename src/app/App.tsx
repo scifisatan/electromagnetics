@@ -1,18 +1,21 @@
 import renderMathInElement from "katex/contrib/auto-render";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Header } from "../components/Header";
 import { QuestionContent } from "../components/QuestionContent";
+import { QuestionDetail } from "../components/QuestionDetail";
 import { useQuestionExplorer } from "../hooks/useQuestionExplorer";
 import { useQuestionFilters } from "../hooks/useQuestionFilters";
+import type { Question } from "../data/questions";
 
 export function App() {
   const contentRef = useRef<HTMLDivElement>(null);
   const filters = useQuestionFilters();
   const { filteredQuestions, topicCounts, viewTitle, years } = useQuestionExplorer(filters);
+  const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(null);
 
   useEffect(() => {
-    if (!contentRef.current) return;
+    if (!contentRef.current || selectedQuestion) return;
 
     renderMathInElement(contentRef.current, {
       delimiters: [
@@ -21,7 +24,18 @@ export function App() {
       ],
       throwOnError: false,
     });
-  }, [filteredQuestions, filters.viewMode]);
+  }, [filteredQuestions, filters.viewMode, selectedQuestion]);
+
+  if (selectedQuestion) {
+    return (
+      <div className="min-h-screen bg-[var(--bg)]">
+        <QuestionDetail 
+          question={selectedQuestion} 
+          onBack={() => setSelectedQuestion(null)} 
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[var(--bg)]">
@@ -54,6 +68,7 @@ export function App() {
             questions={filteredQuestions}
             search={filters.search}
             viewMode="list"
+            onQuestionSelect={setSelectedQuestion}
           />
         </div>
       </main>

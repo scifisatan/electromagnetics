@@ -11,18 +11,21 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.2.4",
     "katex": "^0.16.45",
+    "lucide-react": "^1.14.0",
+    "nuqs": "^2.8.9",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "react-router": "^7.14.2",
     "tailwindcss": "^4.2.4",
     "zod": "^4.4.1"
   },
   "devDependencies": {
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
     "typescript": "~6.0.2",
     "vite": "npm:@voidzero-dev/vite-plus-core@latest",
-    "vite-plus": "latest",
-    "@vitejs/plugin-react": "^6.0.1"
+    "vite-plus": "latest"
   },
   "overrides": {
     "vite": "npm:@voidzero-dev/vite-plus-core@latest",

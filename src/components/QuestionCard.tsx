@@ -1,14 +1,24 @@
+import { CheckCircle } from "lucide-react";
 import type { Question } from "../data/questions";
+import { useQuestionData } from "../hooks/useQuestionData";
 
 interface QuestionCardProps {
   question: Question;
+  onClick?: () => void;
 }
 
-export function QuestionCard({ question }: QuestionCardProps) {
+export function QuestionCard({ question, onClick }: QuestionCardProps) {
+  const questionId = `${question.year}-${question.qno}-${question.t}`;
+  const { isDone } = useQuestionData(questionId);
+
   return (
-    <div className="mb-8 flex gap-4 text-[var(--text)] transition-colors hover:bg-[var(--bg2)] rounded-lg p-2 -ml-2">
-      <div className="font-[family:var(--serif)] text-base font-semibold min-w-[2rem] pt-0.5 text-[var(--text2)]">
+    <button
+      onClick={onClick}
+      className="mb-8 flex gap-4 text-left w-full text-[var(--text)] transition-colors hover:bg-[var(--bg2)] rounded-lg p-2 -ml-2 cursor-pointer"
+    >
+      <div className="font-[family:var(--serif)] text-base font-semibold min-w-[2rem] pt-0.5 text-[var(--text2)] flex flex-col items-center gap-2">
         {question.qno}.
+        {isDone && <CheckCircle className="text-emerald-500 w-4 h-4" />}
       </div>
       <div className="flex-1">
         <div className="q-text font-[family:var(--serif)] text-[1.1rem] leading-[1.8]">
@@ -38,6 +48,6 @@ export function QuestionCard({ question }: QuestionCardProps) {
           </span>
         </div>
       </div>
-    </div>
+    </button>
   );
 }
