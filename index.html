@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TU Electromagnetics — Past Questions Bank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>TU <span>Electromagnetics</span> EX 503</h1>
+        <div class="header-meta">Tribhuvan University · BE II/I · Past Questions</div>
+      </div>
+      <div class="search-wrap">
+        <svg
+          width="15"
+          height="15"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search questions…" />
+      </div>
+      <div class="header-count">Showing <span id="count-num">—</span> questions</div>
+    </header>
+
+    <div class="layout">
+      <aside>
+        <div class="sidebar-section">
+          <div class="sidebar-label">By Topic</div>
+          <button class="filter-btn active" id="tbtn-0">
+            <span class="filter-dot" style="background: #888"></span> All Topics
+            <span class="filter-count" id="tc-0">0</span>
+          </button>
+          <!-- topic buttons injected by JS -->
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-label">By Exam Year</div>
+          <div class="years-wrap" id="year-filters"></div>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-label">By Type</div>
+          <button class="filter-btn active" id="typebtn-all">
+            <span class="filter-dot" style="background: #888"></span> All
+          </button>
+          <button class="filter-btn" id="typebtn-Regular">
+            <span class="filter-dot" style="background: var(--t4)"></span> Regular
+          </button>
+          <button class="filter-btn" id="typebtn-Back">
+            <span class="filter-dot" style="background: var(--t2)"></span> Back
+          </button>
+        </div>
+      </aside>
+
+      <main>
+        <div class="view-controls">
+          <div class="view-title" id="viewTitle">All Questions</div>
+          <div class="view-toggle">
+            <button class="active" id="gridBtn">Grid</button>
+            <button id="listBtn">List</button>
+          </div>
+        </div>
+        <div id="content"></div>
+      </main>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
