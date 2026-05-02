@@ -6,6 +6,7 @@ import { QuestionContent } from "../components/QuestionContent";
 import { QuestionDetailView } from "../components/QuestionDetailView";
 import { useQuestionExplorer } from "../hooks/useQuestionExplorer";
 import { useQuestionFilters } from "../hooks/useQuestionFilters";
+import { DesktopGuard } from "../components/DesktopGuard";
 import Q from "../data/questions";
 
 function Home() {
@@ -126,5 +127,12 @@ function Home() {
 }
 
 export function App() {
-  return <Home />;
+  return (
+    <>
+      <DesktopGuard />
+      <div id="app-root" className="max-[900px]:hidden">
+        <Home />
+      </div>
+    </>
+  );
 }
