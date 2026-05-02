@@ -1,10 +1,14 @@
 import { Header } from "../components/Header";
 import { QuestionContent } from "../components/QuestionContent";
-import { QuestionDetailView } from "../components/QuestionDetailView";
+import { lazy, Suspense } from "react";
 import { useQuestionExplorer } from "../hooks/useQuestionExplorer";
 import { useQuestionFilters } from "../hooks/useQuestionFilters";
 import { DesktopGuard } from "../components/DesktopGuard";
 import Q from "../data/questions";
+
+const QuestionDetailView = lazy(() =>
+  import("../components/QuestionDetailView").then((m) => ({ default: m.QuestionDetailView })),
+);
 
 function Home() {
   const filters = useQuestionFilters();
@@ -25,11 +29,11 @@ function Home() {
       <div id="split-container-home" className="flex-1 flex overflow-hidden relative">
         {/* Main Content Area (List) */}
         <div
-          className="flex flex-col transition-all duration-300 overflow-hidden"
+          className="flex flex-col overflow-hidden border-r border-transparent data-[selected=true]:border-[var(--border)]"
+          data-selected={!!selectedQuestion}
           style={{
             width: selectedQuestion ? "380px" : "100%",
             flexShrink: 0,
-            borderRight: selectedQuestion ? "1px solid var(--border)" : "0px solid transparent",
           }}
         >
           {/* Header inside the list container */}
@@ -90,19 +94,23 @@ function Home() {
 
         {/* Detail Panel */}
         <div
-          className="flex-1 min-w-0 flex flex-col transition-all duration-300 bg-[var(--bg)]"
+          className="absolute right-0 top-0 bottom-0 z-10 flex flex-col transition-[transform,opacity] duration-300 bg-[var(--bg)] ease-[cubic-bezier(0.2,0,0,1)]"
           style={{
+            width: "calc(100% - 380px)",
             transform: selectedQuestion ? "translateX(0)" : "translateX(100%)",
             opacity: selectedQuestion ? 1 : 0,
             visibility: selectedQuestion ? "visible" : "hidden",
+            willChange: "transform, opacity",
           }}
         >
           {selectedQuestion && (
-            <QuestionDetailView
-              key={selectedQuestion.id}
-              question={selectedQuestion}
-              onClose={handleCloseDetail}
-            />
+            <Suspense fallback={null}>
+              <QuestionDetailView
+                key={selectedQuestion.id}
+                question={selectedQuestion}
+                onClose={handleCloseDetail}
+              />
+            </Suspense>
           )}
         </div>
       </div>

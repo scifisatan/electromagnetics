@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import Q from "../data/questions";
-import TOPICS, { type TopicId } from "../data/topics";
+import TOPICS from "../data/topics";
 
 export function useStudyProgress() {
   const [completedIds] = useLocalStorage<string[]>("completed-questions", []);

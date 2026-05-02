@@ -58,7 +58,6 @@ export function filterQuestions(
   return questions.filter((question) => {
     if (activeTopic !== 0 && question.t !== activeTopic) return false;
 
-    // Check if any occurrence matches the year and type filters
     const hasMatchingOccurrence = question.occurrences.some((occ) => {
       const yearMatch = activeYear === "all" || occ.year === activeYear;
       const typeMatch = activeType === "all" || occ.type === activeType;
@@ -80,7 +79,6 @@ export function filterQuestions(
 
 export function sortQuestionsByYear(questions: Question[]): Question[] {
   return [...questions].sort((a, b) => {
-    // Sort by the latest year in occurrences
     const getLatestYear = (q: Question) => {
       return Math.max(
         ...q.occurrences.map((o) => Number.parseInt(o.year.split(" ")[0] ?? "0", 10)),
@@ -92,7 +90,6 @@ export function sortQuestionsByYear(questions: Question[]): Question[] {
 
     if (yearB !== yearA) return yearB - yearA;
 
-    // If years are same, sort by the first occurrence's qno
     return a.occurrences[0].qno.localeCompare(b.occurrences[0].qno);
   });
 }

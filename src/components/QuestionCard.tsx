@@ -9,12 +9,16 @@ interface QuestionCardProps {
   isActive?: boolean;
 }
 
+// Preload the editor chunk when the user hovers over a card
+const preloadDetailView = () => import("../components/QuestionDetailView");
+
 export function QuestionCard({ question, onClick, isActive }: QuestionCardProps) {
   const { isDone } = useQuestionData(question.id);
 
   return (
     <button
       onClick={onClick}
+      onMouseEnter={preloadDetailView}
       className={`mb-4 flex gap-4 text-left w-full text-[var(--text)] transition-all rounded-xl p-3 cursor-pointer border ${
         isActive
           ? "bg-[var(--bg)] border-blue-200 shadow-sm ring-1 ring-blue-100"

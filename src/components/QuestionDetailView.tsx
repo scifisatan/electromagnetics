@@ -35,6 +35,13 @@ export function QuestionDetailView({ question, onClose }: QuestionDetailViewProp
   const questionRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<MDXEditorMethods>(null);
   const [initialMarkdown, setInitialMarkdown] = useState<string | null>(null);
+  const [isAnimationFinished, setIsAnimationFinished] = useState(false);
+
+  useEffect(() => {
+    // Delay editor mounting to avoid jank during panel animation
+    const timer = setTimeout(() => setIsAnimationFinished(true), 400);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const idbRegex = /idb:\/\/(img_[a-z0-9_]+)/g;
@@ -194,9 +201,9 @@ export function QuestionDetailView({ question, onClose }: QuestionDetailViewProp
 
         {/* Notes editor section */}
         <div className="flex-1 overflow-hidden flex flex-col relative">
-          {initialMarkdown === null ? (
+          {initialMarkdown === null || !isAnimationFinished ? (
             <div className="flex-1 flex items-center justify-center text-[var(--text3)] animate-pulse">
-              Initializing editor...
+              {initialMarkdown === null ? "Initializing editor..." : "Preparing notes..."}
             </div>
           ) : (
             <MDXEditor
