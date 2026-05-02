@@ -1,6 +1,6 @@
 import { CheckCircle2, Circle, X } from "./Icons";
 import { useEffect, useRef, useState } from "react";
-import renderMathInElement from "katex/contrib/auto-render";
+import { Latex } from "./Latex";
 import type { Question } from "../data/questions";
 import { useQuestionData } from "../hooks/useQuestionData";
 import { saveImage, loadImage, deleteImage } from "../lib/imageStorage";
@@ -68,16 +68,7 @@ export function QuestionDetailView({ question, onClose }: QuestionDetailViewProp
     };
   }, [questionId, storedNotes === ""]); // Only re-run when question changes or if we were waiting for first data
 
-  useEffect(() => {
-    if (!questionRef.current) return;
-    renderMathInElement(questionRef.current, {
-      delimiters: [
-        { left: "$$", right: "$$", display: true },
-        { left: "$", right: "$", display: false },
-      ],
-      throwOnError: false,
-    });
-  }, [question]);
+
 
   const base64Cache = useRef<Record<string, string>>({});
   const lastStoredIds = useRef<Set<string>>(new Set());
@@ -184,7 +175,7 @@ export function QuestionDetailView({ question, onClose }: QuestionDetailViewProp
               {question.occurrences[0].qno}.
             </div>
             <div className="q-text font-[family:var(--serif)] text-2xl leading-[1.8] text-[var(--text)]">
-              {question.text}
+              <Latex content={question.text} />
               {question.sub ? (
                 <div className="mt-8 flex flex-col gap-5 ml-2">
                   {question.sub.map((subQuestion, index) => (
@@ -192,7 +183,9 @@ export function QuestionDetailView({ question, onClose }: QuestionDetailViewProp
                       <span className="text-[var(--text3)] font-medium">
                         ({String.fromCharCode(97 + index)})
                       </span>
-                      <div>{subQuestion}</div>
+                      <div>
+                        <Latex content={subQuestion} />
+                      </div>
                     </div>
                   ))}
                 </div>

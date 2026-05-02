@@ -1,4 +1,3 @@
-import renderMathInElement from "katex/contrib/auto-render";
 import { useEffect, useRef } from "react";
 
 import { Header } from "../components/Header";
@@ -10,23 +9,12 @@ import { DesktopGuard } from "../components/DesktopGuard";
 import Q from "../data/questions";
 
 function Home() {
-  const contentRef = useRef<HTMLDivElement>(null);
   const filters = useQuestionFilters();
   const { filteredQuestions, viewTitle, years } = useQuestionExplorer(filters);
 
   const selectedQuestion = Q.find((q) => q.id === filters.selectedQuestionId);
 
-  useEffect(() => {
-    if (!contentRef.current) return;
 
-    renderMathInElement(contentRef.current, {
-      delimiters: [
-        { left: "$$", right: "$$", display: true },
-        { left: "$", right: "$", display: false },
-      ],
-      throwOnError: false,
-    });
-  }, [filteredQuestions, filters.selectedQuestionId]);
 
   const handleQuestionSelect = (q: any) => {
     void filters.setSelectedQuestionId(q.id, { shallow: true });
@@ -90,7 +78,7 @@ function Home() {
                 </span>
               </div>
 
-              <div ref={contentRef}>
+              <div>
                 <QuestionContent
                   activeYear={filters.activeYear}
                   activeTopic={filters.activeTopic}

@@ -1,4 +1,5 @@
 import { CheckCircle } from "./Icons";
+import { Latex } from "./Latex";
 import type { Question } from "../data/questions";
 import { useQuestionData } from "../hooks/useQuestionData";
 
@@ -26,7 +27,7 @@ export function QuestionCard({ question, onClick, isActive }: QuestionCardProps)
       </div>
       <div className="flex-1">
         <div className="q-text font-[family:var(--serif)] text-[1.1rem] leading-[1.8]">
-          {question.text}
+          <Latex content={question.text} />
           {question.sub ? (
             <div className="mt-4 flex flex-col gap-3 ml-2">
               {question.sub.map((subQuestion, index) => (
@@ -34,7 +35,9 @@ export function QuestionCard({ question, onClick, isActive }: QuestionCardProps)
                   <span className="text-[var(--text3)] font-medium">
                     ({String.fromCharCode(97 + index)})
                   </span>
-                  <div>{subQuestion}</div>
+                  <div>
+                    <Latex content={subQuestion} />
+                  </div>
                 </div>
               ))}
             </div>
