@@ -1,4 +1,4 @@
-import { CheckCircle2, Circle, X } from "lucide-react";
+import { CheckCircle2, Circle, X } from "./Icons";
 import { useEffect, useRef, useState } from "react";
 import renderMathInElement from "katex/contrib/auto-render";
 import type { Question } from "../data/questions";
@@ -223,7 +223,7 @@ export function QuestionDetailView({ question, onClose }: QuestionDetailViewProp
                 markdownShortcutPlugin(),
                 linkPlugin(),
                 linkDialogPlugin(),
-                imagePlugin({ imageUploadHandler })
+                imagePlugin({ imageUploadHandler }),
               ]}
             />
           )}

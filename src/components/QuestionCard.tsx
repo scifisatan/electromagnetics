@@ -1,4 +1,4 @@
-import { CheckCircle } from "lucide-react";
+import { CheckCircle } from "./Icons";
 import type { Question } from "../data/questions";
 import { useQuestionData } from "../hooks/useQuestionData";
 

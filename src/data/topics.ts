@@ -1,5 +1,3 @@
-import { z } from "zod";
-
 export type TopicId = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
 export interface Topic {
@@ -9,29 +7,7 @@ export interface Topic {
   bg: string;
 }
 
-export const topicIdSchema = z.union([
-  z.literal(1),
-  z.literal(2),
-  z.literal(3),
-  z.literal(4),
-  z.literal(5),
-  z.literal(6),
-  z.literal(7),
-  z.literal(8),
-  z.literal(9),
-  z.literal(10),
-  z.literal(11),
-  z.literal(12),
-]);
-
-export const topicSchema: z.ZodType<Topic> = z.object({
-  id: topicIdSchema,
-  name: z.string().min(1),
-  color: z.string().min(1),
-  bg: z.string().min(1),
-});
-
-const topicData = [
+const TOPICS: Topic[] = [
   {
     id: 1,
     name: "Coordinate Systems & Vector Transformations",
@@ -79,8 +55,6 @@ const topicData = [
   { id: 10, name: "Transmission Lines", color: "var(--t10)", bg: "var(--t10bg)" },
   { id: 11, name: "Waveguides", color: "var(--t11)", bg: "var(--t11bg)" },
   { id: 12, name: "Antennas", color: "var(--t12)", bg: "var(--t12bg)" },
-] satisfies Topic[];
-
-const TOPICS: Topic[] = z.array(topicSchema).parse(topicData);
+];
 
 export default TOPICS;

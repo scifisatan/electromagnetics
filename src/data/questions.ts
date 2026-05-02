@@ -1,7 +1,4 @@
-import { z } from "zod";
-import { type TopicId, topicIdSchema } from "./topics";
-
-export const examTypeSchema = z.union([z.literal("Regular"), z.literal("Back")]);
+import { type TopicId } from "./topics";
 
 export type ExamType = "Regular" | "Back";
 
@@ -18,20 +15,6 @@ export interface Question {
   sub?: string[];
   occurrences: QuestionOccurrence[];
 }
-
-export const questionOccurrenceSchema = z.object({
-  year: z.string().min(1),
-  type: examTypeSchema,
-  qno: z.string().min(1),
-});
-
-export const questionSchema: z.ZodType<Question> = z.object({
-  id: z.string().min(1),
-  t: topicIdSchema,
-  text: z.string().min(1),
-  sub: z.array(z.string().min(1)).optional(),
-  occurrences: z.array(questionOccurrenceSchema).min(1),
-});
 
 const questionData: Question[] = [
   {
@@ -3656,6 +3639,4 @@ const questionData: Question[] = [
   },
 ];
 
-const Q: Question[] = z.array(questionSchema).parse(questionData);
-
-export default Q;
+export default questionData;
