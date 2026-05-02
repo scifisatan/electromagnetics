@@ -30,6 +30,7 @@
 - `katex` for LaTeX support
 - `@mdxeditor/editor` for notes
 - Tailwind CSS for styling
+- Used [Kami Design System](https://kami.tw93.fun/) for paper-like, comforting design
 
 ## Notes storage
 
