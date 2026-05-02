@@ -10,6 +10,7 @@ interface QuestionContentProps {
   questions: Question[];
   search: string;
   onQuestionSelect?: (question: Question) => void;
+  activeQuestionId?: string;
 }
 
 export function QuestionContent({
@@ -18,6 +19,7 @@ export function QuestionContent({
   questions,
   search,
   onQuestionSelect,
+  activeQuestionId,
 }: QuestionContentProps) {
   if (questions.length === 0) {
     return (
@@ -42,7 +44,11 @@ export function QuestionContent({
                   {topic.name}
                 </h2>
               </div>
-              <QuestionGrid questions={topicQuestions} onQuestionSelect={onQuestionSelect} />
+              <QuestionGrid
+                questions={topicQuestions}
+                onQuestionSelect={onQuestionSelect}
+                activeQuestionId={activeQuestionId}
+              />
             </div>
           );
         })}
@@ -51,6 +57,10 @@ export function QuestionContent({
   }
 
   return (
-    <QuestionGrid questions={sortQuestionsByYear(questions)} onQuestionSelect={onQuestionSelect} />
+    <QuestionGrid
+      questions={sortQuestionsByYear(questions)}
+      onQuestionSelect={onQuestionSelect}
+      activeQuestionId={activeQuestionId}
+    />
   );
 }

@@ -5,19 +5,24 @@ import { useQuestionData } from "../hooks/useQuestionData";
 interface QuestionCardProps {
   question: Question;
   onClick?: () => void;
+  isActive?: boolean;
 }
 
-export function QuestionCard({ question, onClick }: QuestionCardProps) {
-  const questionId = `${question.year}-${question.qno}-${question.t}`;
-  const { isDone } = useQuestionData(questionId);
+export function QuestionCard({ question, onClick, isActive }: QuestionCardProps) {
+  const { isDone } = useQuestionData(question.id);
 
   return (
     <button
       onClick={onClick}
-      className="mb-8 flex gap-4 text-left w-full text-[var(--text)] transition-colors hover:bg-[var(--bg2)] rounded-lg p-2 -ml-2 cursor-pointer"
+      className={`mb-4 flex gap-4 text-left w-full text-[var(--text)] transition-all rounded-xl p-3 cursor-pointer border ${
+        isActive
+          ? "bg-[var(--bg)] border-blue-200 shadow-sm ring-1 ring-blue-100"
+          : "border-transparent hover:bg-[var(--bg2)]"
+      }`}
     >
       <div className="font-[family:var(--serif)] text-base font-semibold min-w-[2rem] pt-0.5 text-[var(--text2)] flex flex-col items-center gap-2">
-        {question.qno}.{isDone && <CheckCircle className="text-emerald-500 w-4 h-4" />}
+        {question.occurrences[0].qno}.
+        {isDone && <CheckCircle className="text-emerald-500 w-4 h-4" />}
       </div>
       <div className="flex-1">
         <div className="q-text font-[family:var(--serif)] text-[1.1rem] leading-[1.8]">
@@ -36,19 +41,22 @@ export function QuestionCard({ question, onClick }: QuestionCardProps) {
           ) : null}
         </div>
 
-        <div className="mt-4 flex items-center gap-3 font-[family:var(--sans)] text-[0.75rem] uppercase tracking-wider font-semibold">
-          <span className="rounded bg-[var(--bg3)] border border-[var(--border)] px-2 py-1 text-[var(--text2)]">
-            {question.year}
-          </span>
-          <span
-            className={`rounded px-2 py-1 border ${
-              question.type === "Back"
-                ? "border-red-200 bg-red-50 text-red-600"
-                : "border-emerald-200 bg-emerald-50 text-emerald-600"
-            }`}
-          >
-            {question.type}
-          </span>
+        <div className="mt-4 flex flex-wrap items-center gap-2 font-[family:var(--sans)] text-[0.7rem] uppercase tracking-wider font-semibold">
+          {question.occurrences.map((occ) => (
+            <div
+              key={`${occ.year}-${occ.qno}`}
+              className="flex items-center gap-1.5 bg-[var(--bg3)] border border-[var(--border)] rounded-md px-1.5 py-0.5"
+            >
+              <span className="text-[var(--text2)]">
+                {occ.year} ({occ.qno})
+              </span>
+              <span
+                className={`w-1.5 h-1.5 rounded-full ${
+                  occ.type === "Back" ? "bg-red-400" : "bg-emerald-400"
+                }`}
+              />
+            </div>
+          ))}
         </div>
       </div>
     </button>

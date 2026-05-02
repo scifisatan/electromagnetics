@@ -12,11 +12,17 @@ export function useQuestionFilters() {
 
   const [search, setSearch] = useQueryState("q", parseAsString.withDefault(""));
 
+  const [selectedQuestionId, setSelectedQuestionId] = useQueryState(
+    "id",
+    parseAsString.withDefault(""),
+  );
+
   const resetFilters = () => {
     void setActiveTopic(null);
     void setActiveYear(null);
     void setActiveType(null);
     void setSearch(null);
+    void setSelectedQuestionId(null);
   };
 
   return {
@@ -24,6 +30,8 @@ export function useQuestionFilters() {
     activeYear: activeYear as ActiveYear,
     activeType: activeType as ActiveType,
     search,
+    selectedQuestionId,
+    setSelectedQuestionId,
     setActiveTopic,
     setActiveYear,
     setActiveType,

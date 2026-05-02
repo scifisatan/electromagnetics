@@ -3,7 +3,13 @@ import type { ActiveType, ActiveYear } from "../types/filters";
 import type { TopicId } from "../data/topics";
 
 export function getYears(): string[] {
-  return [...new Set(Q.map((question) => question.year))].sort((a, b) => {
+  const years = new Set<string>();
+  for (const question of Q) {
+    for (const occurrence of question.occurrences) {
+      years.add(occurrence.year);
+    }
+  }
+  return Array.from(years).sort((a, b) => {
     const yearA = Number.parseInt(a.split(" ")[0] ?? "", 10);
     const yearB = Number.parseInt(b.split(" ")[0] ?? "", 10);
     return yearB - yearA;
@@ -51,12 +57,20 @@ export function filterQuestions(
 
   return questions.filter((question) => {
     if (activeTopic !== 0 && question.t !== activeTopic) return false;
-    if (activeYear !== "all" && question.year !== activeYear) return false;
-    if (activeType !== "all" && question.type !== activeType) return false;
+
+    // Check if any occurrence matches the year and type filters
+    const hasMatchingOccurrence = question.occurrences.some((occ) => {
+      const yearMatch = activeYear === "all" || occ.year === activeYear;
+      const typeMatch = activeType === "all" || occ.type === activeType;
+      return yearMatch && typeMatch;
+    });
+
+    if (!hasMatchingOccurrence) return false;
 
     if (normalizedSearch) {
+      const occurrencesText = question.occurrences.map((o) => `${o.year} ${o.qno}`).join(" ");
       const haystack =
-        `${question.text} ${question.year} ${(question.sub ?? []).join(" ")}`.toLowerCase();
+        `${question.text} ${occurrencesText} ${(question.sub ?? []).join(" ")}`.toLowerCase();
       if (!haystack.includes(normalizedSearch)) return false;
     }
 
@@ -66,9 +80,19 @@ export function filterQuestions(
 
 export function sortQuestionsByYear(questions: Question[]): Question[] {
   return [...questions].sort((a, b) => {
-    const yearA = Number.parseInt(a.year.split(" ")[0] ?? "", 10);
-    const yearB = Number.parseInt(b.year.split(" ")[0] ?? "", 10);
+    // Sort by the latest year in occurrences
+    const getLatestYear = (q: Question) => {
+      return Math.max(
+        ...q.occurrences.map((o) => Number.parseInt(o.year.split(" ")[0] ?? "0", 10)),
+      );
+    };
+
+    const yearA = getLatestYear(a);
+    const yearB = getLatestYear(b);
+
     if (yearB !== yearA) return yearB - yearA;
-    return a.qno.localeCompare(b.qno);
+
+    // If years are same, sort by the first occurrence's qno
+    return a.occurrences[0].qno.localeCompare(b.occurrences[0].qno);
   });
 }

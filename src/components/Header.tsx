@@ -13,6 +13,7 @@ interface HeaderProps {
 
   years: string[];
   onResetFilters?: () => void;
+  compact?: boolean;
 }
 
 export function Header({
@@ -27,45 +28,77 @@ export function Header({
 
   years,
   onResetFilters,
+  compact,
 }: HeaderProps) {
   const hasActiveFilters =
     activeTopic !== 0 || activeYear !== "all" || activeType !== "all" || search !== "";
 
   return (
-    <header className="sticky top-0 z-10 border-b border-[var(--border)] bg-[var(--bg2)]/90 backdrop-blur-md">
-      <div className="mx-auto flex max-w-4xl flex-col gap-4 px-4 pt-4 pb-3 min-[901px]:px-8">
+    <header
+      className={`${compact ? "" : "sticky top-0 z-10 border-b border-[var(--border)] bg-[var(--bg2)]/90 backdrop-blur-md"}`}
+    >
+      <div
+        className={`mx-auto flex flex-col gap-4 ${compact ? "px-0 pt-0 pb-0" : "max-w-4xl px-4 pt-4 pb-3 min-[901px]:px-8"}`}
+      >
         {/* Top Row: Title & Search */}
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <h1 className="font-[family:var(--serif)] text-xl font-bold text-[var(--text)] whitespace-nowrap">
-            Electromagnetics <span className="text-[var(--text3)] font-normal">EX 503</span>
-          </h1>
+        {!compact && (
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <h1 className="font-[family:var(--serif)] text-xl font-bold text-[var(--text)] whitespace-nowrap">
+              Electromagnetics <span className="text-[var(--text3)] font-normal">EX 503</span>
+            </h1>
 
-          <div className="relative w-full md:w-64">
-            <svg
-              aria-hidden="true"
-              className="absolute top-1/2 left-2.5 -translate-y-1/2 text-[var(--text3)]"
-              fill="none"
-              height="14"
-              viewBox="0 0 24 24"
-              width="14"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.35-4.35" />
-            </svg>
-            <input
-              className="w-full rounded-md border border-[var(--border)] bg-[var(--bg)] py-1.5 pr-2.5 pl-8 font-[family:var(--sans)] text-[13.5px] text-[var(--text)] outline-none transition-colors focus:border-[var(--text3)]"
-              type="search"
-              value={search}
-              onChange={(event) => onSearchChange(event.target.value)}
-              placeholder="Search..."
-            />
+            <div className="relative w-full md:w-64">
+              <svg
+                aria-hidden="true"
+                className="absolute top-1/2 left-2.5 -translate-y-1/2 text-[var(--text3)]"
+                fill="none"
+                height="14"
+                viewBox="0 0 24 24"
+                width="14"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+              </svg>
+              <input
+                className="w-full rounded-md border border-[var(--border)] bg-[var(--bg)] py-1.5 pr-2.5 pl-8 font-[family:var(--sans)] text-[13.5px] text-[var(--text)] outline-none transition-colors focus:border-[var(--text3)]"
+                type="search"
+                value={search}
+                onChange={(event) => onSearchChange(event.target.value)}
+                placeholder="Search..."
+              />
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Filters Row */}
-        <div className="flex flex-col gap-3 mt-1">
+        <div className={`flex flex-col gap-3 ${compact ? "mt-0" : "mt-1"}`}>
+          {compact && (
+            <div className="relative w-full">
+              <svg
+                aria-hidden="true"
+                className="absolute top-1/2 left-2.5 -translate-y-1/2 text-[var(--text3)]"
+                fill="none"
+                height="14"
+                viewBox="0 0 24 24"
+                width="14"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+              </svg>
+              <input
+                className="w-full rounded-md border border-[var(--border)] bg-[var(--bg)] py-1.5 pr-2.5 pl-8 font-[family:var(--sans)] text-[13.5px] text-[var(--text)] outline-none transition-colors focus:border-[var(--text3)]"
+                type="search"
+                value={search}
+                onChange={(event) => onSearchChange(event.target.value)}
+                placeholder="Search..."
+              />
+            </div>
+          )}
+
           {/* Topics */}
           <div className="flex items-center">
             <div className="flex overflow-x-auto hide-scrollbar items-center gap-2 pb-1 -mb-1 w-full">
@@ -77,7 +110,7 @@ export function Header({
                     : "border-[var(--border)] bg-[var(--bg)] text-[var(--text2)] hover:border-[var(--text3)]"
                 }`}
               >
-                All Topics
+                All
               </button>
               {TOPICS.map((t) => (
                 <button
@@ -101,7 +134,9 @@ export function Header({
           </div>
 
           {/* Years & Types */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div
+            className={`flex flex-col ${compact ? "gap-2" : "md:flex-row md:items-center justify-between gap-3"}`}
+          >
             <div className="flex overflow-x-auto hide-scrollbar items-center gap-2 pb-1 -mb-1 flex-1">
               <button
                 onClick={() => onYearChange("all")}
@@ -128,19 +163,21 @@ export function Header({
               ))}
             </div>
 
-            <div className="flex items-center gap-2 shrink-0 self-start md:self-auto">
+            <div
+              className={`flex items-center gap-2 shrink-0 ${compact ? "justify-between" : "self-start md:self-auto"}`}
+            >
               <div className="flex items-center bg-[var(--bg)] rounded-full p-0.5 border border-[var(--border)]">
                 {(["all", "Regular", "Back"] as const).map((type) => (
                   <button
                     key={type}
                     onClick={() => onTypeChange(type)}
-                    className={`rounded-full px-4 py-1 text-[12px] font-medium transition-all ${
+                    className={`rounded-full px-3 py-1 text-[11px] font-medium transition-all ${
                       activeType === type
                         ? "bg-[var(--bg2)] text-[var(--text)] shadow-sm border border-[var(--border2)]"
                         : "text-[var(--text3)] hover:text-[var(--text2)] border border-transparent"
                     }`}
                   >
-                    {type === "all" ? "All Types" : type}
+                    {type === "all" ? "Types" : type}
                   </button>
                 ))}
               </div>
@@ -164,7 +201,7 @@ export function Header({
                     <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
                     <path d="M3 3v5h5" />
                   </svg>
-                  Reset
+                  {!compact && "Reset"}
                 </button>
               )}
             </div>
