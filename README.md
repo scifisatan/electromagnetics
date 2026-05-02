@@ -24,14 +24,6 @@
 - Moved the app to React 19
 - Kept the UI split into smaller components as the app grew
 
-## UI and behavior
-
-- `nuqs` for URL-based filter state
-- `katex` for LaTeX support
-- `@mdxeditor/editor` for notes
-- Tailwind CSS for styling
-- Used [Kami Design System](https://kami.tw93.fun/) for paper-like, comforting design
-
 ## Notes storage
 
 - Notes stay local in the browser
@@ -43,17 +35,15 @@
 
 - `ocr.z.ai` for PDF to Markdown conversion
 - `Claude Sonnet 4.6` for Markdown to JSON conversion and initial app work
-- `React 19` for the web-app
 - `nuqs` for URL-based filters
 - `katex` for LaTeX support
 - `@mdxeditor/editor` for notes
 - `idb-keyval` for IndexedDB storage
-- `Tailwind` for styling
+- [Kami Design System](https://kami.tw93.fun/) 
 
-## Notes
-
-- Images are stored per note.
-- I still need to add cleanup for images deleted from notes so IndexedDB does not keep unused data around.
+## TODO
+- Add cleanup for images deleted from notes so IndexedDB does not keep unused data around.
+- Passing strategy/ Marks optimization technique?
 
 ## Running locally
 
