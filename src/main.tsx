@@ -1,3 +1,4 @@
+import "./lib/prism-setup";
 import "katex/dist/katex.min.css";
 import "./styles.css";
 

@@ -223,7 +223,7 @@ export function QuestionDetailView({ question, onClose }: QuestionDetailViewProp
                 markdownShortcutPlugin(),
                 linkPlugin(),
                 linkDialogPlugin(),
-                imagePlugin({ imageUploadHandler }),
+                imagePlugin({ imageUploadHandler })
               ]}
             />
           )}

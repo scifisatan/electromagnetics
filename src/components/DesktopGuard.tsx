@@ -1,5 +1,3 @@
-import React from "react";
-
 export function DesktopGuard() {
   return (
     <div className="fixed inset-0 z-[10000] hidden flex-col items-center justify-center bg-[var(--bg)] p-10 text-center max-[900px]:flex">
