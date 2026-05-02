@@ -1,5 +1,3 @@
-import { useEffect, useRef } from "react";
-
 import { Header } from "../components/Header";
 import { QuestionContent } from "../components/QuestionContent";
 import { QuestionDetailView } from "../components/QuestionDetailView";
@@ -13,8 +11,6 @@ function Home() {
   const { filteredQuestions, viewTitle, years } = useQuestionExplorer(filters);
 
   const selectedQuestion = Q.find((q) => q.id === filters.selectedQuestionId);
-
-
 
   const handleQuestionSelect = (q: any) => {
     void filters.setSelectedQuestionId(q.id, { shallow: true });

@@ -15,8 +15,8 @@ export function Latex({ content, className }: LatexProps) {
     let html = content.replace(/\$\$(.*?)\$\$/gs, (_, math) => {
       try {
         return katex.renderToString(math, { displayMode: true, throwOnError: false });
-      } catch (e) {
-        return `$$\${math}\$\$`;
+      } catch {
+        return `$$\${math}$\$`;
       }
     });
 
@@ -25,18 +25,13 @@ export function Latex({ content, className }: LatexProps) {
     html = html.replace(/\$(.*?)\$/g, (_, math) => {
       try {
         return katex.renderToString(math, { displayMode: false, throwOnError: false });
-      } catch (e) {
-        return `\$\${math}\$`;
+      } catch {
+        return `$\${math}\$`;
       }
     });
 
     return html;
   }, [content]);
 
-  return (
-    <span
-      className={className}
-      dangerouslySetInnerHTML={{ __html: renderedContent }}
-    />
-  );
+  return <span className={className} dangerouslySetInnerHTML={{ __html: renderedContent }} />;
 }

@@ -68,8 +68,6 @@ export function QuestionDetailView({ question, onClose }: QuestionDetailViewProp
     };
   }, [questionId, storedNotes === ""]); // Only re-run when question changes or if we were waiting for first data
 
-
-
   const base64Cache = useRef<Record<string, string>>({});
   const lastStoredIds = useRef<Set<string>>(new Set());
 
