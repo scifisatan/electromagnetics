@@ -46,6 +46,7 @@
 
 - Add cleanup for images deleted from notes so IndexedDB does not keep unused data around.
 - Passing strategy/ Marks optimization technique?
+- Maybe make data persist on database? but I don't want to pay for image storage 
 
 ## Running locally
 
