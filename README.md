@@ -23,6 +23,7 @@
 - Used it to check the data structure and filtering flow
 - Moved the app to React 19
 - Kept the UI split into smaller components as the app grew
+- Iterate it based on preference
 
 ## Notes storage
 
