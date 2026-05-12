@@ -156,22 +156,70 @@ export function Header({
                 <span>All Topics</span>
               </button>
               {TOPICS.map((t) => {
+                const topicProgress = progress.topics.find((tp) => tp.topicId === t.id);
+                const isComplete = topicProgress && topicProgress.completed === topicProgress.total;
+                const percentage = topicProgress?.percentage || 0;
+                const isActive = activeTopic === t.id;
+
                 return (
                   <button
                     key={t.id}
                     onClick={() => onTopicChange(t.id)}
-                    className={`shrink-0 rounded-full border px-3 py-1 text-[13px] font-medium transition-colors flex items-center gap-2 ${
-                      activeTopic === t.id
-                        ? "border-transparent"
-                        : "border-[var(--border)] bg-[var(--bg)] hover:border-[var(--text3)]"
+                    className={`shrink-0 rounded-full border px-3 py-1 text-[13px] font-medium transition-all flex items-center justify-center gap-2 relative overflow-hidden h-[34px] ${
+                      isActive
+                        ? "shadow-sm"
+                        : isComplete
+                          ? "border-green-500 bg-green-50 text-green-700 hover:bg-green-100/80"
+                          : "border-[var(--border)] bg-[var(--bg)] text-[var(--text2)] hover:border-[var(--text3)]"
                     }`}
                     style={
-                      activeTopic === t.id
-                        ? { backgroundColor: t.bg, color: t.color, borderColor: t.color }
-                        : { color: "var(--text2)" }
+                      isActive
+                        ? { borderColor: t.color, color: t.color, backgroundColor: "var(--bg)" }
+                        : {}
                     }
                   >
-                    <span>{t.name}</span>
+                    {/* Progress Background - Always visible */}
+                    {percentage > 0 && (
+                      <div
+                        className="absolute left-0 top-0 bottom-0 pointer-events-none transition-all duration-700 ease-out z-0"
+                        style={{
+                          width: `${percentage}%`,
+                          backgroundColor: isActive ? t.bg : isComplete ? "rgb(34 197 94 / 0.2)" : "rgb(79 124 255 / 0.1)",
+                        }}
+                      />
+                    )}
+
+                    {/* Progress Edge - Moving indicator line */}
+                    {percentage > 0 && percentage < 100 && (
+                      <div
+                        className="absolute top-0 bottom-0 w-[2px] pointer-events-none transition-all duration-700 ease-out z-10"
+                        style={{
+                          left: `${percentage}%`,
+                          backgroundColor: isActive ? t.color : "var(--accent)",
+                          boxShadow: isActive ? `0 0 4px ${t.color}` : "none"
+                        }}
+                      />
+                    )}
+
+                    <div className="flex items-center gap-1.5 relative z-20">
+                      {isComplete && (
+                        <svg
+                          width="12"
+                          height="12"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="3.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className={isActive ? "" : "text-green-600"}
+                          style={isActive ? { color: t.color } : {}}
+                        >
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      )}
+                      <span>{t.name}</span>
+                    </div>
                   </button>
                 );
               })}

@@ -3,6 +3,8 @@ import TOPICS, { type TopicId } from "../data/topics";
 import type { ActiveType, ActiveYear } from "../types/filters";
 import { TopicFilterButton, TypeFilterButton, YearFilterButton } from "./FilterButtons";
 
+import { useStudyProgress } from "../hooks/useStudyProgress";
+
 interface SidebarProps {
   activeTopic: TopicId | 0;
   activeType: ActiveType;
@@ -24,6 +26,7 @@ export function Sidebar({
   onTypeChange,
   onYearChange,
 }: SidebarProps) {
+  const progress = useStudyProgress();
   return (
     <aside className="sticky top-[65px] hidden h-[calc(100vh-65px)] w-[270px] min-w-[270px] shrink-0 overflow-y-auto border-r border-[var(--border)] bg-[var(--bg2)] px-4 py-5 min-[901px]:block">
       <div className="mb-6">
@@ -42,15 +45,23 @@ export function Sidebar({
             {Q.length}
           </span>
         </button>
-        {TOPICS.map((topic) => (
-          <TopicFilterButton
-            active={activeTopic === topic.id}
-            count={topicCounts.get(topic.id) ?? 0}
-            key={topic.id}
-            topic={topic}
-            onClick={() => onTopicChange(topic.id)}
-          />
-        ))}
+        {TOPICS.map((topic) => {
+          const topicProgress = progress.topics.find((tp) => tp.topicId === topic.id);
+          const isComplete = topicProgress && topicProgress.completed === topicProgress.total;
+          const percentage = topicProgress?.percentage || 0;
+
+          return (
+            <TopicFilterButton
+              active={activeTopic === topic.id}
+              count={topicCounts.get(topic.id) ?? 0}
+              key={topic.id}
+              topic={topic}
+              onClick={() => onTopicChange(topic.id)}
+              isComplete={isComplete}
+              percentage={percentage}
+            />
+          );
+        })}
       </div>
 
       <div className="mb-6">

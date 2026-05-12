@@ -21,8 +21,12 @@ export function QuestionCard({ question, onClick, isActive }: QuestionCardProps)
       onMouseEnter={preloadDetailView}
       className={`mb-4 flex gap-4 text-left w-full text-[var(--text)] transition-all rounded-xl p-3 cursor-pointer border ${
         isActive
-          ? "bg-[var(--bg)] border-blue-200 shadow-sm ring-1 ring-blue-100"
-          : "border-transparent hover:bg-[var(--bg2)]"
+          ? isDone
+            ? "bg-emerald-50 border-emerald-200 shadow-sm ring-1 ring-emerald-100"
+            : "bg-[var(--bg)] border-blue-200 shadow-sm ring-1 ring-blue-100"
+          : isDone
+            ? "bg-emerald-50/50 border-emerald-100 hover:bg-emerald-50"
+            : "border-transparent hover:bg-[var(--bg2)]"
       }`}
     >
       <div className="font-[family:var(--serif)] text-base font-semibold min-w-[2rem] pt-0.5 text-[var(--text2)] flex flex-col items-center gap-2">
