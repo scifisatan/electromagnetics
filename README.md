@@ -1,7 +1,7 @@
-
 ## Problem Statement
+
 - Scanned exam questions lack selectable or searchable text, making it difficult to browse and study questions efficiently.
-- I wanted a digital interface to interact with the questions and filter them based on: 
+- I wanted a digital interface to interact with the questions and filter them based on:
   - Topic
   - Exam type: Regular / Back
   - Question no.
@@ -39,9 +39,10 @@
 - `katex` for LaTeX support
 - `@mdxeditor/editor` for notes
 - `idb-keyval` for IndexedDB storage
-- [Kami Design System](https://kami.tw93.fun/) 
+- [Kami Design System](https://kami.tw93.fun/)
 
 ## TODO
+
 - Add cleanup for images deleted from notes so IndexedDB does not keep unused data around.
 - Passing strategy/ Marks optimization technique?
 

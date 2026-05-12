@@ -184,7 +184,11 @@ export function Header({
                         className="absolute left-0 top-0 bottom-0 pointer-events-none transition-all duration-700 ease-out z-0"
                         style={{
                           width: `${percentage}%`,
-                          backgroundColor: isActive ? t.bg : isComplete ? "rgb(34 197 94 / 0.2)" : "rgb(79 124 255 / 0.1)",
+                          backgroundColor: isActive
+                            ? t.bg
+                            : isComplete
+                              ? "rgb(34 197 94 / 0.2)"
+                              : "rgb(79 124 255 / 0.1)",
                         }}
                       />
                     )}
@@ -196,7 +200,7 @@ export function Header({
                         style={{
                           left: `${percentage}%`,
                           backgroundColor: isActive ? t.color : "var(--accent)",
-                          boxShadow: isActive ? `0 0 4px ${t.color}` : "none"
+                          boxShadow: isActive ? `0 0 4px ${t.color}` : "none",
                         }}
                       />
                     )}
