@@ -120,48 +120,97 @@ export function ProgressDialog({ isOpen, onClose }: ProgressDialogProps) {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
-                {TOPICS.map((topic) => {
-                  const topicProg = progress.topics.find((t) => t.topicId === topic.id);
-                  if (!topicProg) return null;
+                {/* Left Column (1-6) */}
+                <div className="space-y-6">
+                  {TOPICS.slice(0, Math.ceil(TOPICS.length / 2)).map((topic) => {
+                    const topicProg = progress.topics.find((t) => t.topicId === topic.id);
+                    if (!topicProg) return null;
 
-                  const isComplete = topicProg.completed === topicProg.total && topicProg.total > 0;
+                    const isComplete = topicProg.completed === topicProg.total && topicProg.total > 0;
 
-                  return (
-                    <div key={topic.id} className="flex flex-col py-1">
-                      <div className="flex justify-between items-start mb-2">
-                        <div className="flex gap-3 min-w-0">
+                    return (
+                      <div key={topic.id} className="flex flex-col py-1">
+                        <div className="flex justify-between items-start mb-2">
+                          <div className="flex gap-3 min-w-0">
+                            <div
+                              className="w-1.5 h-4 rounded-full mt-1 shrink-0"
+                              style={{ backgroundColor: topic.color }}
+                            />
+                            <span className="text-[15px] font-medium text-[#3d3d3a] leading-tight">
+                              {topic.name}
+                            </span>
+                          </div>
+                          <div className="flex flex-col items-end gap-1 shrink-0 ml-4">
+                            <span className="text-[14px] font-mono font-bold text-[#141413] tabular-nums leading-none">
+                              {Math.round(topicProg.percentage)}%
+                            </span>
+                            {isComplete ? (
+                              <span className="text-[9px] font-bold text-[#1B365D] uppercase tracking-[0.5px]">
+                                Mastered
+                              </span>
+                            ) : (
+                              <span className="text-[10px] font-mono font-medium text-[#6b6a64]">
+                                {topicProg.completed}/{topicProg.total}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="h-[3px] w-full bg-[#e8e6dc] rounded-full overflow-hidden">
                           <div
-                            className="w-1.5 h-4 rounded-full mt-1 shrink-0"
-                            style={{ backgroundColor: topic.color }}
+                            className="h-full bg-[#1B365D] opacity-60 transition-all duration-700 ease-out"
+                            style={{ width: `${topicProg.percentage}%` }}
                           />
-                          <span className="text-[15px] font-medium text-[#3d3d3a] leading-tight">
-                            {topic.name}
-                          </span>
-                        </div>
-                        <div className="flex flex-col items-end gap-1 shrink-0 ml-4">
-                          <span className="text-[14px] font-mono font-bold text-[#141413] tabular-nums leading-none">
-                            {Math.round(topicProg.percentage)}%
-                          </span>
-                          {isComplete ? (
-                            <span className="text-[9px] font-bold text-[#1B365D] uppercase tracking-[0.5px]">
-                              Mastered
-                            </span>
-                          ) : (
-                            <span className="text-[10px] font-mono font-medium text-[#6b6a64]">
-                              {topicProg.completed}/{topicProg.total}
-                            </span>
-                          )}
                         </div>
                       </div>
-                      <div className="h-[3px] w-full bg-[#e8e6dc] rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-[#1B365D] opacity-60 transition-all duration-700 ease-out"
-                          style={{ width: `${topicProg.percentage}%` }}
-                        />
+                    );
+                  })}
+                </div>
+
+                {/* Right Column (7-12) */}
+                <div className="space-y-6">
+                  {TOPICS.slice(Math.ceil(TOPICS.length / 2)).map((topic) => {
+                    const topicProg = progress.topics.find((t) => t.topicId === topic.id);
+                    if (!topicProg) return null;
+
+                    const isComplete = topicProg.completed === topicProg.total && topicProg.total > 0;
+
+                    return (
+                      <div key={topic.id} className="flex flex-col py-1">
+                        <div className="flex justify-between items-start mb-2">
+                          <div className="flex gap-3 min-w-0">
+                            <div
+                              className="w-1.5 h-4 rounded-full mt-1 shrink-0"
+                              style={{ backgroundColor: topic.color }}
+                            />
+                            <span className="text-[15px] font-medium text-[#3d3d3a] leading-tight">
+                              {topic.name}
+                            </span>
+                          </div>
+                          <div className="flex flex-col items-end gap-1 shrink-0 ml-4">
+                            <span className="text-[14px] font-mono font-bold text-[#141413] tabular-nums leading-none">
+                              {Math.round(topicProg.percentage)}%
+                            </span>
+                            {isComplete ? (
+                              <span className="text-[9px] font-bold text-[#1B365D] uppercase tracking-[0.5px]">
+                                Mastered
+                              </span>
+                            ) : (
+                              <span className="text-[10px] font-mono font-medium text-[#6b6a64]">
+                                {topicProg.completed}/{topicProg.total}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="h-[3px] w-full bg-[#e8e6dc] rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-[#1B365D] opacity-60 transition-all duration-700 ease-out"
+                            style={{ width: `${topicProg.percentage}%` }}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
